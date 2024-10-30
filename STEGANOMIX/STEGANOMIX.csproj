@@ -8,4 +8,83 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Assets\closeBtn_default.png" />
+    <None Remove="Assets\closeBtn_MouseOver.png" />
+    <None Remove="Assets\Roboto-Light.ttf" />
+    <None Remove="Assets\steganography_icon_novel_approach.jpg" />
+    <None Remove="Assets\steganography_icon_novel_approach.png" />
+    <None Remove="Assets\steganography_icon_polish.jpg" />
+    <None Remove="Assets\steganography_icon_polish.png" />
+    <None Remove="Assets\steganography_icon_spojniki_szablon.jpg" />
+    <None Remove="Assets\steganography_icon_spojniki_szablon.png" />
+    <None Remove="Assets\steganography_icon_spojniki_znaczniki.jpg" />
+    <None Remove="Assets\steganography_icon_spojniki_znaczniki.png" />
+    <None Remove="Assets\steganography_icon_text_color_cover.jpg" />
+    <None Remove="Assets\steganography_icon_text_color_cover.png" />
+    <None Remove="Assets\steganography_icon_white_text.jpg" />
+    <None Remove="Assets\steganography_icon_white_text.png" />
+    <None Remove="Assets\steganography_icon_ycbcr.jpg" />
+    <None Remove="Assets\steganography_icon_ycbcr.png" />
+    <None Remove="Assets\tgBtn_default.png" />
+    <None Remove="Assets\tgBtn_MouseOver.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\closeBtn_default.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\closeBtn_MouseOver.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Roboto-Light.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\steganography_icon_novel_approach.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\steganography_icon_novel_approach.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\steganography_icon_polish.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\steganography_icon_polish.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\steganography_icon_spojniki_szablon.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\steganography_icon_spojniki_szablon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\steganography_icon_spojniki_znaczniki.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\steganography_icon_spojniki_znaczniki.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\steganography_icon_text_color_cover.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\steganography_icon_text_color_cover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\steganography_icon_white_text.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\steganography_icon_ycbcr.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\steganography_icon_ycbcr.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\tgBtn_default.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\tgBtn_MouseOver.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
 </Project>
