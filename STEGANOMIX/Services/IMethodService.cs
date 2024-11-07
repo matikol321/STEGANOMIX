@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace STEGANOMIX.Services
 {
-    public class LinkingWordsMethodService
+    public interface IMethodService
     {
-        // Zmiana spójników
-        public LinkingWordsMethodService()
-        {
+        string Encode();
 
-        }
+        string Decode();    
     }
 }

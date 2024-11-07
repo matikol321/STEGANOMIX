@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Text.RegularExpressions;
 
 namespace STEGANOMIX.View
 {
@@ -23,6 +24,12 @@ namespace STEGANOMIX.View
         public MethodSpojnikiSzablonView()
         {
             InitializeComponent();
+        }
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^1-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

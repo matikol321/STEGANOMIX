@@ -18,7 +18,7 @@
             <Setter Property="Placement" Value="Right"/>
             <Setter Property="Height" Value="40"/>
             <Setter Property="MinWidth" Value="100"/>
-            <Setter Property="MaxWidth" Value="800"/>
+            <Setter Property="MaxWidth" Value="900"/>
             <Setter Property="Margin" Value="20,0,0,0"/>
             <Setter Property="Background" Value="#4A5668"/>
             <Setter Property="Foreground" Value="White"/>
@@ -428,8 +428,8 @@
                     <ControlTemplate TargetType="{x:Type Button}">
 
                         <Border Background="{TemplateBinding Background}" 
-                    BorderBrush="#525298" 
-                    BorderThickness="1">
+                                BorderBrush="#525298" 
+                                BorderThickness="1">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
 
@@ -447,10 +447,20 @@
 
                 </Trigger>
 
+                <Trigger Property="IsEnabled" Value="False">
+
+                    <Setter Property="Background" Value="DarkGray"/>
+                    <Setter Property="Foreground" Value="Gray"/>
+
+                </Trigger>
+
             </Style.Triggers>
 
         </Style>
 
+        <Style x:Key="defaultBtn_style" TargetType="{x:Type Button}" BasedOn="{StaticResource saveBtn_style}">
+            
+        </Style>
 
         <!--// ListView Transactions Style Template //-->
 
