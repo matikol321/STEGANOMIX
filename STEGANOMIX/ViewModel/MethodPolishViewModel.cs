@@ -31,6 +31,8 @@ namespace STEGANOMIX.ViewModel
 
         private FileStream? _encodeFS;
         private FileStream? _decodeFS;
+        private MemoryStream? _encodedMS;
+        private MemoryStream? _decodedMS;
 
         public MethodPolishViewModel()
         {
@@ -38,6 +40,8 @@ namespace STEGANOMIX.ViewModel
             _openFileDialog2Command = new RelayCommand(x => OpenFileDialog2());
             _encodeMessageCommand = new RelayCommand(x => EncodeMessage());
             _decodeMessageCommand = new RelayCommand(x => DecodeMessage());
+            _downloadEncodedMessageCommand = new RelayCommand(x => DownloadEncoded());
+            _downloadDecodedMessageCommand = new RelayCommand(x => DownloadDecoded());
 
             _selectedFilePath1 = "nie wgrano pliku";
             _selectedFilePath2 = "nie wgrano pliku";
@@ -106,8 +110,9 @@ namespace STEGANOMIX.ViewModel
                 }
 
                 _service = new LinkingWordsWithTemplateService(_encodeFS);
-                var encodedMessage = _service.Encode();
+                var encodedMessage = _service.EncodeToString();
 
+                _encodedMS = new MemoryStream();
                 DownloadEncodedEnabled = true;
             }
             catch (Exception ex)
@@ -149,8 +154,9 @@ namespace STEGANOMIX.ViewModel
                 }
 
                 _service = new LinkingWordsWithTemplateService(_decodeFS);
-                var encodedMessage = _service.Encode();
+                var decodedMessage = _service.DecodeToString();
 
+                _decodedMS = new MemoryStream();
                 DownloadDecodedEnabled = true;
             }
             catch (Exception ex)
@@ -167,6 +173,16 @@ namespace STEGANOMIX.ViewModel
                     _decodeFS = null;
                 }
             }
+        }
+
+        private void DownloadEncoded()
+        {
+
+        }
+
+        private void DownloadDecoded()
+        {
+
         }
 
 

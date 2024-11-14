@@ -25,12 +25,16 @@ namespace STEGANOMIX.ViewModel
         private string _selectedFilePath1;
         private string _selectedFilePath2;
         private string _userMessage;
+        private string _znaczniki1;
+        private string _znaczniki2;
         private string _decodedMessage;
         private bool _downloadEncodedEnabled;
         private bool _downloadDecodedEnabled;
 
         private FileStream? _encodeFS;
         private FileStream? _decodeFS;
+        private MemoryStream? _encodedMS;
+        private MemoryStream? _decodedMS;
 
         public MethodSpojnikiZnacznikiViewModel()
         {
@@ -38,6 +42,8 @@ namespace STEGANOMIX.ViewModel
             _openFileDialog2Command = new RelayCommand(x => OpenFileDialog2());
             _encodeMessageCommand = new RelayCommand(x => EncodeMessage());
             _decodeMessageCommand = new RelayCommand(x => DecodeMessage());
+            _downloadEncodedMessageCommand = new RelayCommand(x => DownloadEncoded());
+            _downloadDecodedMessageCommand = new RelayCommand(x => DownloadDecoded());
 
             _selectedFilePath1 = "nie wgrano pliku";
             _selectedFilePath2 = "nie wgrano pliku";
@@ -106,8 +112,9 @@ namespace STEGANOMIX.ViewModel
                 }
 
                 _service = new LinkingWordsWithTemplateService(_encodeFS);
-                var encodedMessage = _service.Encode();
+                var encodedMessage = _service.EncodeToString();
 
+                _encodedMS = new MemoryStream();
                 DownloadEncodedEnabled = true;
             }
             catch (Exception ex)
@@ -149,8 +156,9 @@ namespace STEGANOMIX.ViewModel
                 }
 
                 _service = new LinkingWordsWithTemplateService(_decodeFS);
-                var encodedMessage = _service.Encode();
+                var decodedMessage = _service.DecodeToString();
 
+                _decodedMS = new MemoryStream();
                 DownloadDecodedEnabled = true;
             }
             catch (Exception ex)
@@ -167,6 +175,16 @@ namespace STEGANOMIX.ViewModel
                     _decodeFS = null;
                 }
             }
+        }
+
+        private void DownloadEncoded()
+        {
+
+        }
+
+        private void DownloadDecoded()
+        {
+
         }
 
 
@@ -205,6 +223,30 @@ namespace STEGANOMIX.ViewModel
             {
                 _userMessage = value;
                 OnPropertyChanged(nameof(UserMessage));
+            }
+        }
+        public string Znaczniki1
+        {
+            get
+            {
+                return _znaczniki1;
+            }
+            set
+            {
+                _znaczniki1 = value;
+                OnPropertyChanged(nameof(Znaczniki1));
+            }
+        }
+        public string Znaczniki2
+        {
+            get
+            {
+                return _znaczniki2;
+            }
+            set
+            {
+                _znaczniki2 = value;
+                OnPropertyChanged(nameof(Znaczniki2));
             }
         }
         public string DecodedMessage

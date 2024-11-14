@@ -8,8 +8,12 @@ namespace STEGANOMIX.Services
 {
     public interface IMethodService
     {
-        string Encode();
+        string EncodeToString();
 
-        string Decode();    
+        byte[] EncodeToByte();
+
+        string DecodeToString();
+
+        byte[] DecoteToByte();
     }
 }

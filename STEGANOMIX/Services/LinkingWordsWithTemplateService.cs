@@ -16,27 +16,48 @@ namespace STEGANOMIX.Services
             this.FS = fs;
         }
 
-
-        public string Decode()
-        {
-            return string.Empty;
-        }
-
-        public string Encode()
+        public string EncodeToString()
         {
             string result = string.Empty;
             string file = "";
 
-            using(StreamReader sr = new StreamReader(FS))
+            using (StreamReader sr = new StreamReader(FS))
             {
-                while(!sr.EndOfStream)
+                while (!sr.EndOfStream)
+                {
+                    file += sr.ReadLine();
+                }
+            }
+
+            result = file;
+            return result;
+        }
+
+        public byte[] EncodeToByte()
+        {
+            string result = string.Empty;
+            string file = "";
+
+            using (StreamReader sr = new StreamReader(FS))
+            {
+                while (!sr.EndOfStream)
                 {
                     file += sr.ReadLine();
                 }
             }
 
 
-            return result;
+            return null;
+        }
+
+        public string DecodeToString()
+        {
+            return string.Empty;
+        }
+
+        public byte[] DecoteToByte()
+        {
+            return null;
         }
     }
 }

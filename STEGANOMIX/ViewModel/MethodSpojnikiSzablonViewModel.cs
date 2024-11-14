@@ -35,6 +35,8 @@ namespace STEGANOMIX.ViewModel
 
         private FileStream? _encodeFS;
         private FileStream? _decodeFS;
+        private MemoryStream? _encodedMS;
+        private MemoryStream? _decodedMS;
 
         public MethodSpojnikiSzablonViewModel()
         {
@@ -42,6 +44,8 @@ namespace STEGANOMIX.ViewModel
             _openFileDialog2Command = new RelayCommand(x => OpenFileDialog2());
             _encodeMessageCommand = new RelayCommand(x => EncodeMessage());
             _decodeMessageCommand = new RelayCommand(x => DecodeMessage());
+            _downloadEncodedMessageCommand = new RelayCommand(x => DownloadEncoded());
+            _downloadDecodedMessageCommand = new RelayCommand(x => DownloadDecoded());
 
             _selectedFilePath1 = "nie wgrano pliku";
             _selectedFilePath2 = "nie wgrano pliku";
@@ -112,8 +116,15 @@ namespace STEGANOMIX.ViewModel
                 }
 
                 _service = new LinkingWordsWithTemplateService(_encodeFS);
-                var encodedMessage = _service.Encode();
+                var encodedMessage = _service.EncodeToString();
 
+                _encodedMS = new MemoryStream();
+                using(var sw = new StreamWriter(_encodedMS, Encoding.UTF8))
+                {
+                    sw.Write(encodedMessage);
+                    sw.Flush();
+                    _encodedMS.Seek(0, SeekOrigin.Begin);
+                }
                 DownloadEncodedEnabled = true;
             }
             catch (Exception ex)
@@ -155,8 +166,9 @@ namespace STEGANOMIX.ViewModel
                 }
 
                 _service = new LinkingWordsWithTemplateService(_decodeFS);
-                var encodedMessage = _service.Encode();
+                var decodedMessage = _service.DecodeToString();
 
+                _decodedMS = new MemoryStream();
                 DownloadDecodedEnabled = true;
             }
             catch (Exception ex)
@@ -173,6 +185,42 @@ namespace STEGANOMIX.ViewModel
                     _decodeFS = null;
                 }
             }
+        }
+
+        private void DownloadEncoded()
+        {
+            if (_encodedMS == null)
+                return;
+
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+
+            dlg.DefaultExt = ".txt";
+            dlg.Filter = "TXT Files (*.txt)|*.txt|PDF Files (*.pdf)|*.pdf";
+
+            Nullable<bool> result = dlg.ShowDialog();
+
+            if (result == false)
+                return;
+            string filePath = dlg.FileName;
+
+            using (MemoryStream ms = new MemoryStream(_encodedMS.ToArray()))
+            {
+                using (FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None, 0, false))
+                {
+                    byte[] bytes = new byte[ms.Length];
+                    ms.Read(bytes, 0, (int)ms.Length);
+                    fs.Write(bytes, 0, bytes.Length);
+                }
+                _encodedMS.Close();
+                _encodedMS.Dispose();
+                _encodedMS = null;
+                DownloadEncodedEnabled = false;
+            }
+        }
+
+        private void DownloadDecoded()
+        {
+
         }
 
 
