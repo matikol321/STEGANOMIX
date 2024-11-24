@@ -38,7 +38,7 @@ namespace STEGANOMIX.ViewModel
         private MemoryStream? _encodedMS;
         private MemoryStream? _decodedMS;
 
-        private Dictionary<string, string> Spojniki;
+        private SpojnikiDictionary Spojniki;
 
         public MethodSpojnikiSzablonViewModel()
         {
@@ -56,7 +56,7 @@ namespace STEGANOMIX.ViewModel
             _downloadEncodedEnabled = false;
             _downloadDecodedEnabled = false;
 
-            Spojniki = new Dictionary<string, string>();
+            Spojniki = new SpojnikiDictionary();
             FileStream tempFS = new FileStream("Model/spojniki.txt", FileMode.Open);
             using(StreamReader sr = new StreamReader(tempFS))
             {
@@ -64,7 +64,9 @@ namespace STEGANOMIX.ViewModel
                 {
                     var line = sr.ReadLine();
                     var dict = line.Split(";");
-                    Spojniki.Add(dict[0], dict[1]);
+                    Int32.TryParse(dict[2], out int temp);
+                    int code = temp;
+                    Spojniki.Add(dict[0], dict[1], code);
                 }
             }
             tempFS.Dispose();
@@ -185,12 +187,13 @@ namespace STEGANOMIX.ViewModel
                 _service = new LinkingWordsWithTemplateService(_decodeFS, _template2, Spojniki);
                 var decodedMessage = _service.DecodeToString();
 
-                _decodedMS = new MemoryStream();
-                DownloadDecodedEnabled = true;
+                DecodedMessage = decodedMessage;
+                //_decodedMS = new MemoryStream();
+                //DownloadDecodedEnabled = true;
             }
             catch (Exception ex)
             {
-                DownloadDecodedEnabled = false;
+                //DownloadDecodedEnabled = false;
                 MessageBox.Show(ex.Message);
             }
             finally
@@ -237,7 +240,7 @@ namespace STEGANOMIX.ViewModel
 
         private void DownloadDecoded()
         {
-
+            
         }
 
 

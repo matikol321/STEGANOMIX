@@ -36,6 +36,8 @@ namespace STEGANOMIX.ViewModel
         private MemoryStream? _encodedMS;
         private MemoryStream? _decodedMS;
 
+        private SpojnikiDictionary Spojniki;
+
         public MethodSpojnikiZnacznikiViewModel()
         {
             _openFileDialog1Command = new RelayCommand(x => OpenFileDialog1());
@@ -49,6 +51,23 @@ namespace STEGANOMIX.ViewModel
             _selectedFilePath2 = "nie wgrano pliku";
             _downloadEncodedEnabled = false;
             _downloadDecodedEnabled = false;
+
+            Spojniki = new SpojnikiDictionary();
+            FileStream tempFS = new FileStream("Model/spojniki.txt", FileMode.Open);
+            using (StreamReader sr = new StreamReader(tempFS))
+            {
+                while (!sr.EndOfStream)
+                {
+                    var line = sr.ReadLine();
+                    var dict = line.Split(";");
+                    Int32.TryParse(dict[2], out int temp);
+                    int code = temp;
+                    Spojniki.Add(dict[0], dict[1], code);
+                }
+            }
+            tempFS.Dispose();
+            tempFS.Close();
+            tempFS = null;
         }
 
         private void OpenFileDialog1()
@@ -111,10 +130,18 @@ namespace STEGANOMIX.ViewModel
                     return;
                 }
 
-                //_service = new LinkingWordsWithTemplateService(_encodeFS);
+                var znaczniki = Znaczniki1.Replace(" ", string.Empty).Split(',').ToList();
+
+                _service = new LinkingWordsWithTemplateService(_encodeFS, 2, Spojniki, _userMessage, znaczniki);
                 var encodedMessage = _service.EncodeToString();
 
                 _encodedMS = new MemoryStream();
+                using (var sw = new StreamWriter(_encodedMS, Encoding.UTF8))
+                {
+                    sw.Write(encodedMessage);
+                    sw.Flush();
+                    _encodedMS.Seek(0, SeekOrigin.Begin);
+                }
                 DownloadEncodedEnabled = true;
             }
             catch (Exception ex)
@@ -155,11 +182,14 @@ namespace STEGANOMIX.ViewModel
                     return;
                 }
 
-                //_service = new LinkingWordsWithTemplateService(_decodeFS);
+                var znaczniki = Znaczniki2.Replace(" ", string.Empty).Split(',').ToList();
+
+                _service = new LinkingWordsWithTemplateService(_decodeFS, 2, Spojniki, null, znaczniki);
                 var decodedMessage = _service.DecodeToString();
 
-                _decodedMS = new MemoryStream();
-                DownloadDecodedEnabled = true;
+                DecodedMessage = decodedMessage;
+                //_decodedMS = new MemoryStream();
+                //DownloadDecodedEnabled = true;
             }
             catch (Exception ex)
             {
@@ -179,7 +209,33 @@ namespace STEGANOMIX.ViewModel
 
         private void DownloadEncoded()
         {
+            if (_encodedMS == null)
+                return;
 
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+
+            dlg.DefaultExt = ".txt";
+            dlg.Filter = "TXT Files (*.txt)|*.txt|PDF Files (*.pdf)|*.pdf";
+
+            Nullable<bool> result = dlg.ShowDialog();
+
+            if (result == false)
+                return;
+            string filePath = dlg.FileName;
+
+            using (MemoryStream ms = new MemoryStream(_encodedMS.ToArray()))
+            {
+                using (FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None, 0, false))
+                {
+                    byte[] bytes = new byte[ms.Length];
+                    ms.Read(bytes, 0, (int)ms.Length);
+                    fs.Write(bytes, 0, bytes.Length);
+                }
+                _encodedMS.Close();
+                _encodedMS.Dispose();
+                _encodedMS = null;
+                DownloadEncodedEnabled = false;
+            }
         }
 
         private void DownloadDecoded()

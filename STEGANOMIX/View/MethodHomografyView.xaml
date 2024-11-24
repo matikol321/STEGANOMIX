@@ -7,6 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TextBlock Text="Ukrywanie wiadomości w tekstach poprzez wykorzystanie homografów" Foreground="White"/>
+        <TextBlock Text="Ukrywanie wiadomości w tekstach poprzez wykorzystanie klucza oraz manipulację paragrafami" Foreground="White"/>
     </Grid>
 </UserControl>

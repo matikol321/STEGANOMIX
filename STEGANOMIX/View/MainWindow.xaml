@@ -255,7 +255,7 @@
                             </ListViewItem.ToolTip>
                         </ListViewItem>
 
-                        <!--// Ukrywanie wiadomości w tekstach poprzez wykorzystanie homografów //-->
+                        <!--// Ukrywanie wiadomości w tekstach poprzez wykorzystanie klucza oraz manipulację paragrafami //-->
 
                         <ListViewItem HorizontalAlignment="Left"
                                       Margin="0,0,0,15" MouseEnter="ListViewItem_MouseEnter">
@@ -275,7 +275,7 @@
                             </Button>
                             <ListViewItem.ToolTip>
                                 <ToolTip x:Name="tt_homografy"
-                                         Content="Ukrywanie wiadomości w tekstach poprzez wykorzystanie homografów"
+                                         Content="Ukrywanie wiadomości w tekstach poprzez wykorzystanie klucza oraz manipulację paragrafami"
                                          Style="{StaticResource tt_style}"/>
                             </ListViewItem.ToolTip>
                         </ListViewItem>

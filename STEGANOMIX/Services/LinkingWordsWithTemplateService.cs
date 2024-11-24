@@ -1,4 +1,5 @@
-﻿using System;
+﻿using STEGANOMIX.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,17 +15,20 @@ namespace STEGANOMIX.Services
 
         private int Template { get; }
 
-        private Dictionary<string,string> Spojniki { get; }
+        private SpojnikiDictionary Spojniki { get; }
 
         private string Message { get; }
 
         private List<int> AsciiMessage { get; set; } = new List<int>();
 
-        public LinkingWordsWithTemplateService(FileStream fs, int template, Dictionary<string, string> spojniki, string? message = null)
+        private List<string>? Znaczniki { get; }
+
+        public LinkingWordsWithTemplateService(FileStream fs, int template, SpojnikiDictionary spojniki, string? message = null, List<string>? znaczniki = null)
         {
             this.FS = fs;
             Template = template;
             Spojniki = spojniki;
+            Znaczniki = znaczniki;
 
             if (message != null)
             {
@@ -43,6 +47,8 @@ namespace STEGANOMIX.Services
                     }
                 }
             }
+            var asciiText = string.Concat(AsciiMessage);
+            Znaczniki = znaczniki;
         }
 
         public string EncodeToString()
@@ -50,78 +56,76 @@ namespace STEGANOMIX.Services
             string result = string.Empty;
             string file = "";
 
-            using (StreamReader sr = new StreamReader(FS))
-            {
-                while (!sr.EndOfStream)
-                {
-                    file += sr.ReadLine();
-                }
-            }
+            var readedText = FS.EnumerateLines().ToArray();
 
-            var splittedFile = file.Split(' ');
             int replaceTemplate = Template;
             bool replaced = false;
             int counter = 0;
-            for(int i=0; i<splittedFile.Length; i++)
+            for (int j=0;j<readedText.Length;j++)
             {
-                replaced = false;
-                var originalWord = splittedFile[i];
-                var newWord = splittedFile[i].Replace(".", string.Empty).Replace(",",string.Empty)
-                    .Replace(";",string.Empty).Replace(":",string.Empty).Replace("'",string.Empty)
-                    .Replace("\"", string.Empty).Replace("(", string.Empty).Replace(")", string.Empty)
-                    .Replace("?",string.Empty).Replace("!",string.Empty);
-                
+                var splittedFile = readedText[j].Split(' ');
+                for (int i = 0; i < splittedFile.Length; i++)
+                {
+                    replaced = false;
+                    var originalWord = splittedFile[i];
+                    var newWord = splittedFile[i].Replace(".", string.Empty).Replace(",", string.Empty)
+                        .Replace(";", string.Empty).Replace(":", string.Empty).Replace("'", string.Empty)
+                        .Replace("\"", string.Empty).Replace("(", string.Empty).Replace(")", string.Empty)
+                        .Replace("?", string.Empty).Replace("!", string.Empty).Replace("\r", string.Empty).Replace("\n", string.Empty);
 
-                if(Spojniki.ContainsKey(newWord.ToLower()))
-                {
-                    if (replaceTemplate == Template)
-                    {
-                        if (AsciiMessage[counter] == 1)
-                        {
-                            newWord = Spojniki[newWord.ToLower()];
-                            replaced = true;
-                        }
-                        counter++;
-                        replaceTemplate = 1;
-                    }
-                    else
-                        replaceTemplate++;
-                }
-                else if(Spojniki.ContainsValue(newWord.ToLower()))
-                {
-                    if (replaceTemplate == Template)
-                    {
-                        if (AsciiMessage[counter] == 1)
-                        {
-                            var key = Spojniki.Where(x => x.Value == newWord.ToLower()).FirstOrDefault();
-                            newWord = key.Key;
-                            replaced = true;
-                        }
-                        counter++;
-                        replaceTemplate = 1;
-                    }
-                    else
-                        replaceTemplate++;
-                }
 
-                if(replaced)
-                {
-                    var firstLetter = splittedFile[i][0];
-                    if (char.IsUpper(firstLetter))
+                    if (Znaczniki != null && Znaczniki.Contains(newWord.ToLower()))
+                        replaceTemplate = Template;
+                    if (Spojniki.ContainsKey(newWord.ToLower()))
                     {
-                        if (newWord.Length == 1)
-                            newWord = newWord.ToUpper();
+                        if (replaceTemplate == Template)
+                        {
+                            if (AsciiMessage[counter] == Spojniki[newWord.ToLower()].Code)
+                            {
+                                newWord = Spojniki[newWord.ToLower()].Value;
+                                replaced = true;
+                            }
+                            counter++;
+                            replaceTemplate = 1;
+                        }
                         else
-                            newWord = newWord[0].ToString().ToUpper() + newWord[1..];
+                            replaceTemplate++;
                     }
-                    splittedFile[i] = splittedFile[i].Replace(originalWord, newWord);
+
+                    if (replaced)
+                    {
+                        var firstLetter = splittedFile[i][0];
+                        if (char.IsUpper(firstLetter))
+                        {
+                            if (newWord.Length == 1)
+                                newWord = newWord.ToUpper();
+                            else
+                                newWord = newWord[0].ToString().ToUpper() + newWord[1..];
+                        }
+                        splittedFile[i] = splittedFile[i].Replace(originalWord, newWord);
+                    }
+
+                    if (counter == AsciiMessage.Count)
+                        break;
                 }
+                readedText[j] = string.Join(' ', splittedFile);
 
                 if (counter == AsciiMessage.Count)
                     break;
             }
+            for (int j=0;j<readedText.Length;j++)
+            {
+                if (readedText[j].StartsWith(Environment.NewLine))
+                {
+                    var letter = Environment.NewLine + Environment.NewLine;
+                    if (readedText[j].StartsWith(letter))
+                        readedText[j] = readedText[j].Replace(letter, Environment.NewLine);
+                    else
+                        readedText[j] = readedText[j].TrimStart();
+                }
+            }
 
-            result = string.Join(' ', splittedFile);
+            result = string.Concat(readedText);
             return result;
         }
 
@@ -147,50 +151,68 @@ namespace STEGANOMIX.Services
             string result = string.Empty;
             string file = "";
 
-            using (StreamReader sr = new StreamReader(FS))
-            {
-                while (!sr.EndOfStream)
-                {
-                    file += sr.ReadLine();
-                }
-            }
+            var readedText = FS.EnumerateLines().ToArray();
 
-            var splittedFile = file.Split(' ');
             int replaceTemplate = Template;
             int counter = 0;
             List<int> resultList = new List<int>();
-            for (int i = 0; i < splittedFile.Length; i++)
+            for (int j=0;j<readedText.Length;j++)
             {
-                var originalWord = splittedFile[i];
-                var newWord = splittedFile[i].Replace(".", string.Empty).Replace(",", string.Empty)
-                    .Replace(";", string.Empty).Replace(":", string.Empty).Replace("'", string.Empty)
-                    .Replace("\"", string.Empty).Replace("(", string.Empty).Replace(")", string.Empty)
-                    .Replace("?", string.Empty).Replace("!", string.Empty);
+                var splittedFile = readedText[j].Split(' ');
+                for (int i = 0; i < splittedFile.Length; i++)
+                {
+                    var originalWord = splittedFile[i];
+                    var newWord = splittedFile[i].Replace(".", string.Empty).Replace(",", string.Empty)
+                        .Replace(";", string.Empty).Replace(":", string.Empty).Replace("'", string.Empty)
+                        .Replace("\"", string.Empty).Replace("(", string.Empty).Replace(")", string.Empty)
+                        .Replace("?", string.Empty).Replace("!", string.Empty).Replace("\r", string.Empty).Replace("\n", string.Empty);
 
 
-                if (Spojniki.ContainsKey(newWord.ToLower()))
-                {
-                    if (replaceTemplate == Template)
+                    if (Znaczniki != null && Znaczniki.Contains(newWord.ToLower()))
+                        replaceTemplate = Template;
+                    if (Spojniki.ContainsKey(newWord.ToLower()))
                     {
-                        resultList.Add(1);
+                        if (replaceTemplate == Template)
+                        {
+                            int code = Spojniki[newWord.ToLower()].Code == 1 ? 0 : 1;
+                            resultList.Add(code);
+                            counter++;
+                            replaceTemplate = 1;
+                        }
+                        else
+                            replaceTemplate++;
                     }
-                    else
-                        replaceTemplate++;
-                }
-                else if (Spojniki.ContainsValue(newWord.ToLower()))
-                {
-                    if (replaceTemplate == Template)
-                    {
-                        resultList.Add(0);
-                        counter++;
-                        replaceTemplate = 1;
-                    }
-                    else
-                        replaceTemplate++;
                 }
             }
 
-            result = string.Join(' ', splittedFile);
+
+            var splittedArray = resultList.Split(7);
+            foreach(var splitted in splittedArray )
+            {
+                if(splitted.Count() == 7)
+                {
+                    var asciiBinary = string.Concat(splitted);
+                    try
+                    {
+                        var asciiDecimal = Convert.ToInt32(asciiBinary, 2).ToString();
+                        if(Int32.TryParse(asciiDecimal, out int code))
+                        {
+                            if (code >= 32 && code <= 126)
+                            {
+                                var letter = (char)code;
+                                result += letter;
+                            }
+                            else
+                                break;
+                        }
+                    }
+                    catch(Exception e)
+                    {
+                        continue;
+                    }
+                }
+            }
+
             return result;
         }
 
