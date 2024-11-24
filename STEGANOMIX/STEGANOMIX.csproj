@@ -29,6 +29,7 @@
     <None Remove="Assets\steganography_icon_ycbcr.png" />
     <None Remove="Assets\tgBtn_default.png" />
     <None Remove="Assets\tgBtn_MouseOver.png" />
+    <None Remove="Model\spojniki.txt" />
   </ItemGroup>
 
   <ItemGroup>
@@ -86,6 +87,9 @@
     <Resource Include="Assets\tgBtn_MouseOver.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Content Include="Model\spojniki.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

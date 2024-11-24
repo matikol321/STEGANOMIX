@@ -38,6 +38,8 @@ namespace STEGANOMIX.ViewModel
         private MemoryStream? _encodedMS;
         private MemoryStream? _decodedMS;
 
+        private Dictionary<string, string> Spojniki;
+
         public MethodSpojnikiSzablonViewModel()
         {
             _openFileDialog1Command = new RelayCommand(x => OpenFileDialog1());
@@ -53,6 +55,21 @@ namespace STEGANOMIX.ViewModel
             _template2 = 1;
             _downloadEncodedEnabled = false;
             _downloadDecodedEnabled = false;
+
+            Spojniki = new Dictionary<string, string>();
+            FileStream tempFS = new FileStream("Model/spojniki.txt", FileMode.Open);
+            using(StreamReader sr = new StreamReader(tempFS))
+            {
+                while(!sr.EndOfStream)
+                {
+                    var line = sr.ReadLine();
+                    var dict = line.Split(";");
+                    Spojniki.Add(dict[0], dict[1]);
+                }
+            }
+            tempFS.Dispose();
+            tempFS.Close();
+            tempFS = null;
         }
 
         private void OpenFileDialog1()
@@ -115,7 +132,7 @@ namespace STEGANOMIX.ViewModel
                     return;
                 }
 
-                _service = new LinkingWordsWithTemplateService(_encodeFS);
+                _service = new LinkingWordsWithTemplateService(_encodeFS, _template1, Spojniki, _userMessage);
                 var encodedMessage = _service.EncodeToString();
 
                 _encodedMS = new MemoryStream();
@@ -165,7 +182,7 @@ namespace STEGANOMIX.ViewModel
                     return;
                 }
 
-                _service = new LinkingWordsWithTemplateService(_decodeFS);
+                _service = new LinkingWordsWithTemplateService(_decodeFS, _template2, Spojniki);
                 var decodedMessage = _service.DecodeToString();
 
                 _decodedMS = new MemoryStream();

@@ -109,7 +109,7 @@ namespace STEGANOMIX.ViewModel
                     return;
                 }
 
-                _service = new LinkingWordsWithTemplateService(_encodeFS);
+                //_service = new LinkingWordsWithTemplateService(_encodeFS, );
                 var encodedMessage = _service.EncodeToString();
 
                 _encodedMS = new MemoryStream();
@@ -153,7 +153,7 @@ namespace STEGANOMIX.ViewModel
                     return;
                 }
 
-                _service = new LinkingWordsWithTemplateService(_decodeFS);
+                //_service = new LinkingWordsWithTemplateService(_decodeFS);
                 var decodedMessage = _service.DecodeToString();
 
                 _decodedMS = new MemoryStream();
