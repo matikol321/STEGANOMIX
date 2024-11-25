@@ -19,6 +19,7 @@ namespace STEGANOMIX.ViewModel
         private MethodYCBCRViewModel _YCBCRViewModel;
         private MethodSpojnikiZnacznikiViewModel _methodSpojnikiZnacznikiViewModel;
         private MethodSpojnikiSzablonViewModel _methodSpojnikiSzablonViewModel;
+        private SettingsViewModel _settingsViewModel;
         private ICommand _navigateHomografyCommand;
         private ICommand _navigateNovelApproachCommand;
         private ICommand _navigatePolishMethodCommand;
@@ -26,6 +27,7 @@ namespace STEGANOMIX.ViewModel
         private ICommand _navigateYCBCRCommand;
         private ICommand _navigateSpojnikiZnacznikiCommand;
         private ICommand _navigateSpojnikiSzablonCommand;
+        private ICommand _navigateSettingsCommand;
 
         public MainWindowViewModel()
         {
@@ -36,6 +38,7 @@ namespace STEGANOMIX.ViewModel
             _navigateYCBCRCommand = new RelayCommand(x => NavigateYCBCR());
             _navigateSpojnikiZnacznikiCommand = new RelayCommand(x => NavigateSpojnikiZnaczniki());
             _navigateSpojnikiSzablonCommand = new RelayCommand(x => NavigateSpojnikiSzablon());
+            _navigateSettingsCommand = new RelayCommand(x => NavigateSettings());
 
             _homografyViewModel = new MethodHomografyViewModel();
             _novelApproachViewModel = new MethodNovelApproachViewModel();
@@ -44,6 +47,7 @@ namespace STEGANOMIX.ViewModel
             _YCBCRViewModel = new MethodYCBCRViewModel();
             _methodSpojnikiZnacznikiViewModel = new MethodSpojnikiZnacznikiViewModel();
             _methodSpojnikiSzablonViewModel = new MethodSpojnikiSzablonViewModel();
+            _settingsViewModel = new SettingsViewModel();
     }
 
 
@@ -82,6 +86,11 @@ namespace STEGANOMIX.ViewModel
             CurrentViewModel = _methodSpojnikiZnacznikiViewModel;
         }
 
+        private void NavigateSettings()
+        {
+            CurrentViewModel = _settingsViewModel;
+        }
+
 
 
         public ICommand NavigateHomografyCommand { get { return _navigateHomografyCommand; } }
@@ -91,6 +100,7 @@ namespace STEGANOMIX.ViewModel
         public ICommand NavigateYCBCRCommand { get { return _navigateYCBCRCommand; } }
         public ICommand NavigateSpojnikiZnacznikiCommand { get { return _navigateSpojnikiZnacznikiCommand; } }
         public ICommand NavigateSpojnikiSzablonCommand { get { return _navigateSpojnikiSzablonCommand; } }
+        public ICommand NavigateSettingsCommand { get { return _navigateSettingsCommand; } }
 
 
 

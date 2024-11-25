@@ -67,6 +67,10 @@
                         <DataTemplate DataType="{x:Type vm:MethodSpojnikiZnacznikiViewModel}">
                             <v:MethodSpojnikiZnacznikiView/>
                         </DataTemplate>
+
+                        <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
+                            <v:SettingsView/>
+                        </DataTemplate>
                     </ContentControl.Resources>
                 </ContentControl>
             </Grid>
@@ -255,7 +259,7 @@
                             </ListViewItem.ToolTip>
                         </ListViewItem>
 
-                        <!--// Ukrywanie wiadomości w tekstach poprzez wykorzystanie klucza oraz manipulację paragrafami //-->
+                        <!--// Ukrywanie wiadomości w tekstach poprzez manipulację paragrafami //-->
 
                         <ListViewItem HorizontalAlignment="Left"
                                       Margin="0,0,0,15" MouseEnter="ListViewItem_MouseEnter">
@@ -275,7 +279,7 @@
                             </Button>
                             <ListViewItem.ToolTip>
                                 <ToolTip x:Name="tt_homografy"
-                                         Content="Ukrywanie wiadomości w tekstach poprzez wykorzystanie klucza oraz manipulację paragrafami"
+                                         Content="Ukrywanie wiadomości w tekstach poprzez manipulację paragrafami"
                                          Style="{StaticResource tt_style}"/>
                             </ListViewItem.ToolTip>
                         </ListViewItem>
@@ -355,7 +359,33 @@
                             </ListViewItem.ToolTip>
                         </ListViewItem>
 
+                        <!--// Ustawienia //-->
 
+                        <ListViewItem HorizontalAlignment="Left"
+                                        Margin="0,0,0,15" MouseEnter="ListViewItem_MouseEnter">
+                            <Button Style="{StaticResource Btn_menu}"
+                                    Command="{Binding NavigateSettingsCommand}">
+                                <StackPanel Orientation="Horizontal"
+                                            Width="400">
+                                    <Image Source="../Assets/img_setting.png"
+                                           Stretch="Fill"
+                                           Margin="5,0,0,0"
+                                           Width="40"
+                                           Height="40"/>
+                                    <TextBlock Text="Ustawienia"
+                                               Margin="25,0,0,0"
+                                               Style="{StaticResource TestFont_style}"/>
+                                </StackPanel>
+                            </Button>
+                            <ListViewItem.ToolTip>
+                                <ToolTip x:Name="tt_settings"
+                                         Content="Ustawienia"
+                                         Style="{StaticResource tt_style}"/>
+                            </ListViewItem.ToolTip>
+                        </ListViewItem>
+
+                        
+                        
                         
                         <!--// ListView Items Style Template //-->
 

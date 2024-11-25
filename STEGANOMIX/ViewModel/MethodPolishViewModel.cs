@@ -24,6 +24,8 @@ namespace STEGANOMIX.ViewModel
 
         private string _selectedFilePath1;
         private string _selectedFilePath2;
+        private string _selectedFilePath3;
+        private string _selectedFilePath4;
         private string _userMessage;
         private string _decodedMessage;
         private bool _downloadEncodedEnabled;
@@ -45,6 +47,7 @@ namespace STEGANOMIX.ViewModel
 
             _selectedFilePath1 = "nie wgrano pliku";
             _selectedFilePath2 = "nie wgrano pliku";
+            _selectedFilePath3 = "nie wybrano folderu";
             _downloadEncodedEnabled = false;
             _downloadDecodedEnabled = false;
         }
@@ -89,6 +92,11 @@ namespace STEGANOMIX.ViewModel
                 MessageBox.Show("Nie wgrano pliku");
                 return;
             }
+            if (string.IsNullOrEmpty(SelectedFilePath3) || SelectedFilePath3.Equals("nie wybrano folderu"))
+            {
+                MessageBox.Show("Nie wybrano miejsca zapisu");
+                return;
+            }
             if (string.IsNullOrEmpty(UserMessage))
             {
                 MessageBox.Show("Nie wpisano wiadomości");
@@ -109,11 +117,12 @@ namespace STEGANOMIX.ViewModel
                     return;
                 }
 
-                //_service = new LinkingWordsWithTemplateService(_encodeFS);
+                _service = new MethodPolishService();
                 var encodedMessage = _service.EncodeToString();
 
-                _encodedMS = new MemoryStream();
-                DownloadEncodedEnabled = true;
+                SaveEncoded(SelectedFilePath3, encodedMessage);
+                //_encodedMS = new MemoryStream();
+                //DownloadEncodedEnabled = true;
             }
             catch (Exception ex)
             {
@@ -153,11 +162,12 @@ namespace STEGANOMIX.ViewModel
                     return;
                 }
 
-                //_service = new LinkingWordsWithTemplateService(_decodeFS);
+                _service = new MethodPolishService();
                 var decodedMessage = _service.DecodeToString();
 
-                _decodedMS = new MemoryStream();
-                DownloadDecodedEnabled = true;
+                DecodedMessage = decodedMessage;
+                //_decodedMS = new MemoryStream();
+                //DownloadDecodedEnabled = true;
             }
             catch (Exception ex)
             {
@@ -175,14 +185,31 @@ namespace STEGANOMIX.ViewModel
             }
         }
 
-        private void DownloadEncoded()
+        private void SaveEncoded(string path, string fileText)
         {
 
         }
 
+
+
+        private void DownloadEncoded()
+        {
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+
+            dlg.DefaultExt = ".txt";
+            dlg.Filter = "TXT Files (*.txt)|*.txt|PDF Files (*.pdf)|*.pdf";
+
+            Nullable<bool> result = dlg.ShowDialog();
+
+            if (result == false)
+                return;
+            string filePath = dlg.FileName;
+            SelectedFilePath3 = filePath;
+        }
+
         private void DownloadDecoded()
         {
-
+            
         }
 
 
@@ -257,6 +284,18 @@ namespace STEGANOMIX.ViewModel
             {
                 _selectedFilePath2 = value;
                 OnPropertyChanged(nameof(SelectedFilePath2));
+            }
+        }
+        public string SelectedFilePath3
+        {
+            get
+            {
+                return _selectedFilePath3;
+            }
+            set
+            {
+                _selectedFilePath3 = value;
+                OnPropertyChanged(nameof(SelectedFilePath3));
             }
         }
 

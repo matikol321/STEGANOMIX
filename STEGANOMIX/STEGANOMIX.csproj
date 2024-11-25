@@ -7,11 +7,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
 	<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+	<ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Assets\closeBtn_default.png" />
     <None Remove="Assets\closeBtn_MouseOver.png" />
+    <None Remove="Assets\img_setting.png" />
     <None Remove="Assets\Roboto-Light.ttf" />
     <None Remove="Assets\steganography_icon_novel_approach.jpg" />
     <None Remove="Assets\steganography_icon_novel_approach.png" />
@@ -30,6 +32,10 @@
     <None Remove="Assets\tgBtn_default.png" />
     <None Remove="Assets\tgBtn_MouseOver.png" />
     <None Remove="Model\spojniki.txt" />
+    <None Remove="Scripts\date.py" />
+    <None Remove="Scripts\paragraphs.py" />
+    <None Remove="Scripts\polish_characters.py" />
+    <None Remove="Scripts\rgb.py" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +43,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\closeBtn_MouseOver.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\img_setting.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\Roboto-Light.ttf">
@@ -87,6 +96,18 @@
     <Resource Include="Assets\tgBtn_MouseOver.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Content Include="Scripts\date.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\paragraphs.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\polish_characters.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\rgb.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Model\spojniki.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
