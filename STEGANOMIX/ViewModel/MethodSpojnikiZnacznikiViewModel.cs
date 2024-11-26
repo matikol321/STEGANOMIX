@@ -53,7 +53,7 @@ namespace STEGANOMIX.ViewModel
             _downloadDecodedEnabled = false;
 
             Spojniki = new SpojnikiDictionary();
-            FileStream tempFS = new FileStream("Model/spojniki.txt", FileMode.Open);
+            FileStream tempFS = new FileStream("spojniki.txt", FileMode.Open);
             using (StreamReader sr = new StreamReader(tempFS))
             {
                 while (!sr.EndOfStream)

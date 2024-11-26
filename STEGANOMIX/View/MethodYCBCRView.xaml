@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TextBlock Text="Ukrywanie tekstu w obrazie kolorowym poprzez wykorzystanie przestrzeni barw YCbCr"
+        <TextBlock Text="Ukrywanie tekstu w obrazie kolorowym poprzez wykorzystanie przestrzeni barw RGB"
                    Foreground="White"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"

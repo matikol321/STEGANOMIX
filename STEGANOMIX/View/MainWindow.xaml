@@ -183,7 +183,8 @@
                               BorderBrush="Transparent"
                               ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 
-                        <!--// Ukrywanie tekstu w obrazie kolorowym poprzez wykorzystanie przestrzeni barw YCbCr //-->
+                        <!--// Ukrywanie tekstu w obrazie kolorowym poprzez wykorzystanie przestrzeni barw RGB //-->
+                        
                         <ListViewItem HorizontalAlignment="Left"
                                       Margin="0,0,0,15" MouseEnter="ListViewItem_MouseEnter">
                             <Button Style="{StaticResource Btn_menu}"
@@ -195,7 +196,7 @@
                                            Margin="5,0,0,0"
                                            Width="40"
                                            Height="40"/>
-                                    <TextBlock Text="Użycie modelu YCbCr"
+                                    <TextBlock Text="Użycie modelu RGB"
                                                Margin="25,0,0,0"
                                                Style="{StaticResource TestFont_style}"/>
                                 </StackPanel>
@@ -203,7 +204,7 @@
 
                             <ListViewItem.ToolTip>
                                 <ToolTip x:Name="tt_ycbcr"
-                                         Content="Ukrywanie tekstu w obrazie kolorowym poprzez wykorzystanie przestrzeni barw YCbCr"
+                                         Content="Ukrywanie tekstu w obrazie kolorowym poprzez wykorzystanie przestrzeni barw RGB"
                                          Style="{StaticResource tt_style}"/>
                             </ListViewItem.ToolTip>
                         </ListViewItem>
@@ -284,7 +285,7 @@
                             </ListViewItem.ToolTip>
                         </ListViewItem>
 
-                        <!--// Ukrywanie tekstu z wykorzystaniem niewidocznych znaków oraz optymalizacji intensywności kolorów RGB czcionki //-->
+                        <!--// Steganografia z wykorzystaniem modelu systemu liczbowego w datach //-->
 
                         <ListViewItem HorizontalAlignment="Left"
                                       Margin="0,0,0,15" MouseEnter="ListViewItem_MouseEnter">
@@ -297,14 +298,14 @@
                                            Margin="5,0,0,0"
                                            Width="40"
                                            Height="40"/>
-                                    <TextBlock Text="Zmiana koloru białych znaków"
+                                    <TextBlock Text="Użycie systemu liczbowego w datach"
                                                Margin="25,0,0,0"
                                                Style="{StaticResource TestFont_style}"/>
                                 </StackPanel>
                             </Button>
                             <ListViewItem.ToolTip>
                                 <ToolTip x:Name="tt_emptycolors"
-                                         Content="Ukrywanie tekstu z wykorzystaniem niewidocznych znaków oraz optymalizacji intensywności kolorów RGB czcionki"
+                                         Content="Steganografia z wykorzystaniem modelu systemu liczbowego w datach"
                                          Style="{StaticResource tt_style}"/>
                             </ListViewItem.ToolTip>
                         </ListViewItem>

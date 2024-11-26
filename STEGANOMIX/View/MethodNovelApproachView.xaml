@@ -7,12 +7,12 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TextBlock Text="Ukrywanie tekstu z wykorzystaniem niewidocznych znaków oraz optymalizacji intensywności kolorów RGB czcionki"
+        <TextBlock Text="Steganografia z wykorzystaniem modelu systemu liczbowego w datach"
                    Foreground="White"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    FontWeight="Bold"
-                   FontSize="15"
+                   FontSize="19"
                    Margin="20,30,0,0"/>
         <Grid Margin="20,80,0,0">
             <Grid.ColumnDefinitions>
@@ -116,25 +116,6 @@
                            Foreground="White"/>
                         <TextBlock Text="{Binding SelectedFilePath2}"
                            Foreground="White"/>
-                    </StackPanel>
-                </StackPanel>
-
-                <StackPanel HorizontalAlignment="Left"
-                             VerticalAlignment="Top"
-                             Margin="0,40,0,0"
-                             Orientation="Horizontal">
-                    <Button Style="{StaticResource defaultBtn_style}"
-                         Width="100"
-                         Height="40"
-                         HorizontalAlignment="Left"
-                         Content="Wgraj tekst"
-                         Command="{Binding DownloadDecodedMessageCommand}"/>
-                    <StackPanel VerticalAlignment="Center"
-                                 Margin="10,0,0,0">
-                        <TextBlock Text="Wgrany plik:"
-                                 Foreground="White"/>
-                        <TextBlock Text="{Binding SelectedFilePath4}"
-                                 Foreground="White"/>
                     </StackPanel>
                 </StackPanel>
 

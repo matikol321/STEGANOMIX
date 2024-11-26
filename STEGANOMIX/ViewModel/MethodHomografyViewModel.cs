@@ -93,11 +93,11 @@ namespace STEGANOMIX.ViewModel
                 MessageBox.Show("Nie wgrano pliku");
                 return;
             }
-            if (string.IsNullOrEmpty(SelectedFilePath3) || SelectedFilePath3.Equals("nie wybrano folderu"))
-            {
-                MessageBox.Show("Nie wybrano miejsca zapisu");
-                return;
-            }
+            //if (string.IsNullOrEmpty(SelectedFilePath3) || SelectedFilePath3.Equals("nie wybrano folderu"))
+            //{
+            //    MessageBox.Show("Nie wybrano miejsca zapisu");
+            //    return;
+            //}
             if (string.IsNullOrEmpty(UserMessage))
             {
                 MessageBox.Show("Nie wpisano wiadomości");
@@ -111,18 +111,12 @@ namespace STEGANOMIX.ViewModel
 
             try
             {
-                _encodeFS = new FileStream(SelectedFilePath1, FileMode.Open, FileAccess.ReadWrite, FileShare.None, 0, false);
-                if (_encodeFS == null)
-                {
-                    MessageBox.Show("Nie udało się uzyskać dostępu do pliku");
-                    return;
-                }
-
-                _service = new MethodHomografyService();
+                _service = new MethodHomografyService(input_path: SelectedFilePath1, secret_message: UserMessage);
                 var encodedMessage = _service.EncodeToString();
 
-                //_encodedMS = new MemoryStream();
-                //DownloadEncodedEnabled = true;
+                if(encodedMessage.Contains("stego_key.txt"))
+                    MessageBox.Show("Plik został utworzony");
+
                 SaveEncoded(SelectedFilePath3, encodedMessage);
             }
             catch (Exception ex)
@@ -161,14 +155,8 @@ namespace STEGANOMIX.ViewModel
 
             try
             {
-                _decodeFS = new FileStream(SelectedFilePath2, FileMode.Open, FileAccess.ReadWrite, FileShare.None, 0, false);
-                if (_decodeFS == null)
-                {
-                    MessageBox.Show("Nie udało się uzyskać dostępu do pliku");
-                    return;
-                }
 
-                _service = new MethodHomografyService();
+                _service = new MethodHomografyService(input_path: SelectedFilePath2, key_path: SelectedFilePath4);
                 var decodedMessage = _service.DecodeToString();
 
                 DecodedMessage = decodedMessage;

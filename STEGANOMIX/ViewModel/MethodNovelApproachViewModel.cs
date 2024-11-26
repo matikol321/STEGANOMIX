@@ -111,18 +111,15 @@ namespace STEGANOMIX.ViewModel
 
             try
             {
-                _encodeFS = new FileStream(SelectedFilePath1, FileMode.Open, FileAccess.ReadWrite, FileShare.None, 0, false);
-                if (_encodeFS == null)
-                {
-                    MessageBox.Show("Nie udało się uzyskać dostępu do pliku");
-                    return;
-                }
 
-                _service = new MethodNovelApproachService();
+                _service = new MethodNovelApproachService(SelectedFilePath1, UserMessage, SelectedFilePath3, true);
                 var encodedMessage = _service.EncodeToString();
 
                 //_encodedMS = new MemoryStream();
                 //DownloadEncodedEnabled = true;
+                if (!encodedMessage.Equals("error"))
+                    MessageBox.Show("Plik został utworzony");
+
                 SaveEncoded(SelectedFilePath3, encodedMessage);
             }
             catch (Exception ex)
@@ -148,11 +145,6 @@ namespace STEGANOMIX.ViewModel
                 MessageBox.Show("Nie wgrano pliku");
                 return;
             }
-            if (string.IsNullOrEmpty(SelectedFilePath4) || SelectedFilePath4.Equals("nie wgrano pliku"))
-            {
-                MessageBox.Show("Nie wgrano pliku");
-                return;
-            }
             if (!File.Exists(SelectedFilePath2))
             {
                 MessageBox.Show("Nie znaleziono pliku");
@@ -161,14 +153,8 @@ namespace STEGANOMIX.ViewModel
 
             try
             {
-                _decodeFS = new FileStream(SelectedFilePath2, FileMode.Open, FileAccess.ReadWrite, FileShare.None, 0, false);
-                if (_decodeFS == null)
-                {
-                    MessageBox.Show("Nie udało się uzyskać dostępu do pliku");
-                    return;
-                }
 
-                _service = new MethodNovelApproachService();
+                _service = new MethodNovelApproachService(SelectedFilePath2, _file: true);
                 var decodedMessage = _service.DecodeToString();
 
                 DecodedMessage = decodedMessage;

@@ -8,6 +8,7 @@
     <UseWPF>true</UseWPF>
 	<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
 	<ApplicationManifest>app.manifest</ApplicationManifest>
+	<ApplicationIcon>Assets\app.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,7 +32,7 @@
     <None Remove="Assets\steganography_icon_ycbcr.png" />
     <None Remove="Assets\tgBtn_default.png" />
     <None Remove="Assets\tgBtn_MouseOver.png" />
-    <None Remove="Model\spojniki.txt" />
+    <None Remove="spojniki.txt" />
     <None Remove="Scripts\date.py" />
     <None Remove="Scripts\paragraphs.py" />
     <None Remove="Scripts\polish_characters.py" />
@@ -96,6 +97,7 @@
     <Resource Include="Assets\tgBtn_MouseOver.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Content Include="Assets\app.ico" />
     <Content Include="Scripts\date.py">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -108,7 +110,7 @@
     <Content Include="Scripts\rgb.py">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Model\spojniki.txt">
+    <Content Include="spojniki.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
