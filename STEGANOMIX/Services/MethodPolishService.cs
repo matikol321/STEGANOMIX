@@ -90,7 +90,7 @@ namespace STEGANOMIX.Services
 
             ProcessStartInfo start = new ProcessStartInfo();
             start.FileName = python;
-            var command = $"\"{script_path}\" embed \"{input_path}\" \"{secret_message}\"";
+            var command = $"\"{script_path}\" embed \"{input_path}\" \"{secret_message}\" \"{output_path}\"";
             start.Arguments = string.Format("{0}", command);
             //start.Verb = "runas";
             start.CreateNoWindow = false;

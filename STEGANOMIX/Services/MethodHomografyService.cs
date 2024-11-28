@@ -19,12 +19,15 @@ namespace STEGANOMIX.Services
 
         private string script_path { get; }
 
-        public MethodHomografyService(string? input_path = "", string? secret_message = "", string? key_path = "")
+        private string output_path { get; }
+
+        public MethodHomografyService(string? input_path = "", string? secret_message = "", string? key_path = "", string? output_path = "")
         {
             script_path = System.AppDomain.CurrentDomain.BaseDirectory + "Scripts\\paragraphs.py";
             this.input_path = input_path;
             this.secret_message = secret_message;
             this.key_path = key_path;
+            this.output_path = output_path;
         }
 
         public string DecodeToString()
@@ -89,7 +92,7 @@ namespace STEGANOMIX.Services
 
             ProcessStartInfo start = new ProcessStartInfo();
             start.FileName = python;
-            var command = $"\"{script_path}\" embed \"{input_path}\" \"{secret_message}\"";
+            var command = $"\"{script_path}\" embed \"{input_path}\" \"{secret_message}\" \"{output_path}\"";
             start.Arguments = string.Format("{0}", command);
             //start.Verb = "runas";
             start.CreateNoWindow = false;

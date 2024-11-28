@@ -32,10 +32,10 @@
     <None Remove="Assets\steganography_icon_ycbcr.png" />
     <None Remove="Assets\tgBtn_default.png" />
     <None Remove="Assets\tgBtn_MouseOver.png" />
-    <None Remove="spojniki.txt" />
-    <None Remove="Scripts\date.py" />
     <None Remove="Scripts\paragraphs.py" />
     <None Remove="Scripts\polish_characters.py" />
+    <None Remove="spojniki.txt" />
+    <None Remove="Scripts\date.py" />
     <None Remove="Scripts\rgb.py" />
   </ItemGroup>
 

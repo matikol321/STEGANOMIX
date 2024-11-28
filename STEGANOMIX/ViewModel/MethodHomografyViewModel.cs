@@ -93,11 +93,11 @@ namespace STEGANOMIX.ViewModel
                 MessageBox.Show("Nie wgrano pliku");
                 return;
             }
-            //if (string.IsNullOrEmpty(SelectedFilePath3) || SelectedFilePath3.Equals("nie wybrano folderu"))
-            //{
-            //    MessageBox.Show("Nie wybrano miejsca zapisu");
-            //    return;
-            //}
+            if (string.IsNullOrEmpty(SelectedFilePath3) || SelectedFilePath3.Equals("nie wybrano folderu"))
+            {
+                MessageBox.Show("Nie wybrano miejsca zapisu");
+                return;
+            }
             if (string.IsNullOrEmpty(UserMessage))
             {
                 MessageBox.Show("Nie wpisano wiadomości");
@@ -111,10 +111,10 @@ namespace STEGANOMIX.ViewModel
 
             try
             {
-                _service = new MethodHomografyService(input_path: SelectedFilePath1, secret_message: UserMessage);
+                _service = new MethodHomografyService(input_path: SelectedFilePath1, secret_message: UserMessage, output_path: SelectedFilePath3);
                 var encodedMessage = _service.EncodeToString();
 
-                if(encodedMessage.Contains("stego_key.txt"))
+                if(encodedMessage.Contains("txt"))
                     MessageBox.Show("Plik został utworzony");
 
                 SaveEncoded(SelectedFilePath3, encodedMessage);

@@ -73,29 +73,30 @@ def main():
 
     if len(sys.argv) < 3:
         print("Użycie:")
-        print("  Ukrywanie: python script.py embed [cover.txt] ['message to hide']")
+        print("  Ukrywanie: python script.py embed [cover.txt] ['message to hide'] [stego_key.txt]")
         print("  Wydobywanie: python script.py extract [cover.txt] [stego_key.txt]")
         sys.exit(1)
 
     mode = sys.argv[1]
 
     if mode == 'embed':
-        if len(sys.argv) < 4:
-            print("Użycie: python script.py embed [cover.txt] ['message to hide']")
+        if len(sys.argv) < 5:
+            print("Użycie: python script.py embed [cover.txt] ['message to hide'] [stego_key.txt]")
             sys.exit(1)
 
         cover_file = sys.argv[2]
-        secret_message = ' '.join(sys.argv[3:])  # Obsługuje wielowyrazowe wiadomości
+        secret_message = ' '.join(sys.argv[3:-1])  # Obsługuje wielowyrazowe wiadomości
+        stego_key_file = sys.argv[-1]
 
         with open(cover_file, 'r', encoding='utf-8') as f:
             cover_text = f.read()
 
         stego_key = hide_message(cover_text, secret_message)
 
-        with open('stego_key.txt', 'w', encoding='utf-8') as f:
+        with open(stego_key_file, 'w', encoding='utf-8') as f:
             f.write(stego_key)
 
-        print("Klucz stego został zapisany w pliku stego_key.txt.")
+        print(f"Klucz stego został zapisany w pliku {stego_key_file}.")
 
     elif mode == 'extract':
         if len(sys.argv) != 4:

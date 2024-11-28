@@ -273,7 +273,7 @@
                                            Margin="5,0,0,0"
                                            Width="40"
                                            Height="40"/>
-                                    <TextBlock Text="Wykorzystanie homografów"
+                                    <TextBlock Text="Wykorzystanie paragrafów"
                                                Margin="25,0,0,0"
                                                Style="{StaticResource TestFont_style}"/>
                                 </StackPanel>

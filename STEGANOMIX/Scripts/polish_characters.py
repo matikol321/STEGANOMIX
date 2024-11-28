@@ -1,3 +1,6 @@
+import re
+from sys import argv
+
 extension_char = '\u200B'  # Unicode U+200B (Zero Width Space)
 
 # Zbiór liter do ukrywania bitów
@@ -84,32 +87,39 @@ def extract_message(stego_text):
     return bits_to_text(bits)
 
 def main():
-    import sys
-
-    if len(sys.argv) < 3:
+    if len(argv) < 3:
         print("Użycie:")
-        print("  Ukrywanie: python script.py embed [cover.txt] ['message to hide']")
+        print("  Ukrywanie: python script.py embed [cover.txt] ['message to hide'] [stego_output.txt]")
         print("  Wydobywanie: python script.py extract [stego_output.txt]")
-        sys.exit(1)
+        return
 
-    mode = sys.argv[1]
+    mode = argv[1]
 
     if mode == 'embed':
-        cover_file = sys.argv[2]
-        secret_message = sys.argv[3]
+        if len(argv) < 5:
+            print("Użycie: python script.py embed [cover.txt] ['message to hide'] [stego_output.txt]")
+            return
+
+        cover_file = argv[2]
+        secret_message = argv[3]
+        output_file = argv[4]
 
         with open(cover_file, 'r', encoding='utf-8') as f:
             cover_text = f.read()
 
         stego_text = embed_message(cover_text, secret_message)
 
-        with open('stego_output.txt', 'w', encoding='utf-8') as f:
+        with open(output_file, 'w', encoding='utf-8') as f:
             f.write(stego_text)
 
-        print("Wiadomość została ukryta w pliku stego_output.txt.")
+        print(f"Wiadomość została ukryta w pliku {output_file}.")
 
     elif mode == 'extract':
-        stego_file = sys.argv[2]
+        if len(argv) < 3:  # Tryb extract wymaga tylko dwóch argumentów
+            print("Użycie: python script.py extract [stego_output.txt]")
+            return
+
+        stego_file = argv[2]
 
         with open(stego_file, 'r', encoding='utf-8') as f:
             stego_text = f.read()
