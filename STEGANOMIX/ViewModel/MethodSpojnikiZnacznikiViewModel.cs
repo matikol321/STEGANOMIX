@@ -75,7 +75,7 @@ namespace STEGANOMIX.ViewModel
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
 
             dlg.DefaultExt = ".txt";
-            dlg.Filter = "TXT Files (*.txt)|*.txt|PDF Files (*.pdf)|*.pdf";
+            dlg.Filter = "TXT Files (*.txt)|*.txt";
 
             Nullable<bool> result = dlg.ShowDialog();
 
@@ -91,7 +91,7 @@ namespace STEGANOMIX.ViewModel
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
 
             dlg.DefaultExt = ".txt";
-            dlg.Filter = "TXT Files (*.txt)|*.txt|PDF Files (*.pdf)|*.pdf";
+            dlg.Filter = "TXT Files (*.txt)|*.txt";
 
             Nullable<bool> result = dlg.ShowDialog();
 
@@ -215,7 +215,7 @@ namespace STEGANOMIX.ViewModel
             Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
 
             dlg.DefaultExt = ".txt";
-            dlg.Filter = "TXT Files (*.txt)|*.txt|PDF Files (*.pdf)|*.pdf";
+            dlg.Filter = "TXT Files (*.txt)|*.txt";
 
             Nullable<bool> result = dlg.ShowDialog();
 

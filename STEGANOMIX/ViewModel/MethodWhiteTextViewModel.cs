@@ -57,8 +57,8 @@ namespace STEGANOMIX.ViewModel
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
 
-            dlg.DefaultExt = ".txt";
-            dlg.Filter = "TXT Files (*.txt)|*.txt|PDF Files (*.pdf)|*.pdf";
+            dlg.DefaultExt = ".html";
+            dlg.Filter = "HTML Files (*.html)|*.html";
 
             Nullable<bool> result = dlg.ShowDialog();
 
@@ -73,8 +73,8 @@ namespace STEGANOMIX.ViewModel
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
 
-            dlg.DefaultExt = ".txt";
-            dlg.Filter = "TXT Files (*.txt)|*.txt|PDF Files (*.pdf)|*.pdf";
+            dlg.DefaultExt = ".html";
+            dlg.Filter = "HTML Files (*.html)|*.html";
 
             Nullable<bool> result = dlg.ShowDialog();
 
@@ -111,15 +111,12 @@ namespace STEGANOMIX.ViewModel
 
             try
             {
-                _encodeFS = new FileStream(SelectedFilePath1, FileMode.Open, FileAccess.ReadWrite, FileShare.None, 0, false);
-                if (_encodeFS == null)
-                {
-                    MessageBox.Show("Nie udało się uzyskać dostępu do pliku");
-                    return;
-                }
-
-                _service = new MethodWhiteTextService();
+                _service = new MethodWhiteTextService(SelectedFilePath1, UserMessage, SelectedFilePath3);
                 var encodedMessage = _service.EncodeToString();
+
+
+                if (encodedMessage.Contains("html"))
+                    MessageBox.Show("Plik został utworzony");
 
                 //_encodedMS = new MemoryStream();
                 //DownloadEncodedEnabled = true;
@@ -161,14 +158,7 @@ namespace STEGANOMIX.ViewModel
 
             try
             {
-                _decodeFS = new FileStream(SelectedFilePath2, FileMode.Open, FileAccess.ReadWrite, FileShare.None, 0, false);
-                if (_decodeFS == null)
-                {
-                    MessageBox.Show("Nie udało się uzyskać dostępu do pliku");
-                    return;
-                }
-
-                _service = new MethodWhiteTextService();
+                _service = new MethodWhiteTextService(SelectedFilePath2);
                 var decodedMessage = _service.DecodeToString();
 
                 DecodedMessage = decodedMessage;
@@ -200,8 +190,8 @@ namespace STEGANOMIX.ViewModel
         {
             Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
 
-            dlg.DefaultExt = ".txt";
-            dlg.Filter = "TXT Files (*.txt)|*.txt|PDF Files (*.pdf)|*.pdf";
+            dlg.DefaultExt = ".html";
+            dlg.Filter = "HTML Files (*.html)|*.html";
 
             Nullable<bool> result = dlg.ShowDialog();
 
@@ -215,8 +205,8 @@ namespace STEGANOMIX.ViewModel
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
 
-            dlg.DefaultExt = ".txt";
-            dlg.Filter = "TXT Files (*.txt)|*.txt|PDF Files (*.pdf)|*.pdf";
+            dlg.DefaultExt = ".html";
+            dlg.Filter = "HTML Files (*.html)|*.html";
 
             Nullable<bool> result = dlg.ShowDialog();
 

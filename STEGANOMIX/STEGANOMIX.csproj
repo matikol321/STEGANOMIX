@@ -32,6 +32,7 @@
     <None Remove="Assets\steganography_icon_ycbcr.png" />
     <None Remove="Assets\tgBtn_default.png" />
     <None Remove="Assets\tgBtn_MouseOver.png" />
+    <None Remove="Scripts\mixed.py" />
     <None Remove="Scripts\paragraphs.py" />
     <None Remove="Scripts\polish_characters.py" />
     <None Remove="spojniki.txt" />
@@ -100,6 +101,9 @@
     <Content Include="Assets\app.ico" />
     <Content Include="Scripts\date.py">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\mixed.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\paragraphs.py">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
